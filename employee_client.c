@@ -54,8 +54,7 @@ do
 	sqlite3 *db;
 	char *errmsg=0;
 	int rc,opendb=1;
-	char *sql;
-	char *c;	
+	char *sql;	
 	ch='0';
 	ch1='0';
 	printf("enter an option \n1) Add an employee data \
