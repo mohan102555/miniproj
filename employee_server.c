@@ -94,7 +94,7 @@ operation2_1_svc(char **argp, struct svc_req *rqstp)
 	if(opendb==0)
 	{
 		sql="select * from details;";
-		rc=sqlite3_exec(db,sql,callback,0,&errmsg);
+		rc=sqlite3_exec(db,sql,0,0,&errmsg);
 		if(rc)
 		{
 			result2=sqlite3_mprintf("sql error:%s\n",errmsg);
