@@ -218,7 +218,7 @@ do
 				}
 				else
 				{
-				printf("cant open database:%s\n",sqlite3_errmsg(db));
+					printf("cant open database:%s\n",sqlite3_errmsg(db));
 				}
 			}
 			printf("do u want to get another data y/n:");
