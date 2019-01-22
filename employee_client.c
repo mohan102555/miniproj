@@ -54,7 +54,8 @@ do
 	sqlite3 *db;
 	char *errmsg=0;
 	int rc,opendb=1;
-	char *sql;	
+	char *sql;
+	char *c;	
 	ch='0';
 	ch1='0';
 	printf("enter an option \n1) Add an employee data \
@@ -141,7 +142,7 @@ do
 			{
 				printf("%s\n",*result_2);
 			}
-			printf("do u want to delete data again y/n:");
+			printf("do u want to delete data again y/n:\n");
 			scanf(" %c",&ch);
 		}while(ch=='y');
 	break;
@@ -179,15 +180,12 @@ do
 				else
 				{
 					printf("get the data successfully\n");
-					sqlite3_free(errmsg);
 					sqlite3_close(db);
 				}
 			}
 			else
 			{
 			printf("cant open database:%s\n",sqlite3_errmsg(db));
-				sqlite3_free(errmsg);
-				sqlite3_close(db);
 			}
 		}
 	break;
@@ -216,15 +214,12 @@ do
 					else
 					{
 						printf("get the data successfully\n");
-						sqlite3_free(errmsg);
 						sqlite3_close(db);	
 					}
 				}
 				else
 				{
 				printf("cant open database:%s\n",sqlite3_errmsg(db));
-				sqlite3_free(errmsg);
-				sqlite3_close(db);
 				}
 			}
 			printf("do u want to get another data y/n:");
@@ -253,15 +248,12 @@ do
 				else
 				{
 					printf("Get all the data successfully\n");
-					sqlite3_free(errmsg);
 					sqlite3_close(db);
 				}
 			}
 			else
 			{
 			printf("cant open database:%s\n",sqlite3_errmsg(db));
-				sqlite3_free(errmsg);
-				sqlite3_close(db);
 			}
 		}
 	break;

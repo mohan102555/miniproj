@@ -7,7 +7,6 @@
 #include "employee.h"
 #include<sqlite3.h>
 #include<stdio.h>
-#include<stdlib.h>
 int z=1;
 static int callback(void *notused,int ncol,char** colinrow,char ** colname)
 {
@@ -55,7 +54,6 @@ operation1_1_svc(struct details *argp, struct svc_req *rqstp)
 				else
 				{
 					result1=sqlite3_mprintf("inserted data successfully\n");
-					sqlite3_free(errmsg);
 					sqlite3_close(db);
 				}
 			}
@@ -73,7 +71,6 @@ operation1_1_svc(struct details *argp, struct svc_req *rqstp)
 			else
 			{
 				result1=sqlite3_mprintf("inserted data successfully\n");
-				sqlite3_free(errmsg);
 				sqlite3_close(db);
 			}
 		}
@@ -81,8 +78,6 @@ operation1_1_svc(struct details *argp, struct svc_req *rqstp)
 	else
 	{
 		result1=sqlite3_mprintf("cant open database:%s\n",sqlite3_errmsg(db));
-		sqlite3_free(errmsg);
-		sqlite3_close(db);
 	}
 	return &result1;
 }
@@ -99,7 +94,7 @@ operation2_1_svc(char **argp, struct svc_req *rqstp)
 	if(opendb==0)
 	{
 		sql="select * from details;";
-		rc=sqlite3_exec(db,sql,0,0,&errmsg);
+		rc=sqlite3_exec(db,sql,callback,0,&errmsg);
 		if(rc)
 		{
 			result2=sqlite3_mprintf("sql error:%s\n",errmsg);
@@ -108,7 +103,7 @@ operation2_1_svc(char **argp, struct svc_req *rqstp)
 		}
 		else
 		{
-			sql=sqlite3_mprintf("delete from details where %s;",*argp);
+			sql=sqlite3_mprintf("delete from details where %s",*argp);
 			rc=sqlite3_exec(db,sql,callback,0,&errmsg);
 			if(rc)
 			{
@@ -119,7 +114,6 @@ operation2_1_svc(char **argp, struct svc_req *rqstp)
 			else
 			{
 				result2=sqlite3_mprintf("deleted data successfully\n");
-				sqlite3_free(errmsg);
 				sqlite3_close(db);
 			}
 		}
@@ -127,8 +121,6 @@ operation2_1_svc(char **argp, struct svc_req *rqstp)
 	else
 	{
 		result2=sqlite3_mprintf("cant open database:%s\n",sqlite3_errmsg(db));
-		sqlite3_free(errmsg);
-		sqlite3_close(db);
 	}
 	return &result2;
 }
@@ -165,7 +157,6 @@ operation3_1_svc(char **argp, struct svc_req *rqstp)
 			else
 			{
 				result3=sqlite3_mprintf("deleted all data successfully\n");
-				sqlite3_free(errmsg);
 				sqlite3_close(db);
 			}
 		}
@@ -173,8 +164,6 @@ operation3_1_svc(char **argp, struct svc_req *rqstp)
 	else
 	{
 		result3=sqlite3_mprintf("cant open database:%s\n",sqlite3_errmsg(db));
-		sqlite3_free(errmsg);
-		sqlite3_close(db);
 	}
 	return &result3;
 }
